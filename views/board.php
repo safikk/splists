@@ -6,4 +6,6 @@ $_SESSION['page'] = 'board';
 
         <!-- Contenu de index.php, board.php, login.php, signup.php -->
 
+        <h1>Tableaux</h1>
+
 <?php include('../partials/_footer.php'); ?>
