@@ -6,6 +6,8 @@ $bdd = dbConnect('splists', 'root', '', 3308);
 // Response de la BDD non traitee
 $res = $bdd->query('SELECT * FROM lists');
 
+       // Si je veux voir la derniere erreur en BDD : $bdd->errorinfo()
+
 // J'instancie mon tableau qui contoiendra mes listes
 $lists = [];
 
@@ -30,7 +32,8 @@ if (!empty($_POST['list-title']) ) {
     // Change en tête de mesage en http
     Header('Location: /splists/views/board.php' . $bdd->lastInsertId());
 }
-    // READ (1 élément) : Lecture d'une Liste.
+   
+// READ (1 élément) : Lecture d'une Liste.
 function getList($idList) {
     $bdd = dbConnect('splists', 'root', '', 3308);
 
@@ -43,4 +46,26 @@ function getList($idList) {
     $liste = $response->fetch();
 
     return $liste;
+}
+
+
+function getTasks($idTasks) {
+    $bdd = dbConnect('splists', 'root', '', 3308);
+
+    $request ='SELECT * FROM tasks WHERE id_list = ' . $idTasks;
+
+    $response = $bdd->query($request);
+    
+    // J'initialise un tableau de tache vide
+    $tasks = [];
+
+    // Tant que j'ai des données reçues...
+    while ($donnees = $response->fetch()) {
+
+        // j'ajoute (en mettant des crochets au nom de l'array) dans le tableau $task
+        // ce que j'ai reçu dans $donnees
+        $tasks[] = $donnees;
+    }
+
+    return $tasks;
 }
